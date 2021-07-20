@@ -9,21 +9,28 @@ type node struct{
 	char byte
 	left,right *node
 }
-func (cur *node)preOrder(){
+func preOrder(cur *node){
 	if cur==nil {
 		return
 	}
-	cur.preOrder(cur.left)
+	preOrder(cur.left)
 	fmt.Print(cur.char)
-	cur.preOrder(cur.right)
+	preOrder(cur.right)
 }
-func (cur *node)postOrder(){
+func postOrder(cur *node){
 	if cur==nil {
 		return
 	}
-	cur.preOrder(cur.right)
+	postOrder(cur.right)
 	fmt.Print(cur.char)
-	cur.preOrder(cur.left)
+	postOrder(cur.left)
+}
+func pref (c byte)int{
+	if c=='*' || c=='/'{
+		return 2
+	} else{
+		return 1
+	}
 }
 func solve(s string,l int,r int ) *node {
 	if l==r {
@@ -36,18 +43,24 @@ func solve(s string,l int,r int ) *node {
 		return &cur
 	} else {
 		//case 1: s[i+1] wil be the current treenode
-		if pref()<=pref() {
+		if pref(s[l+1])<=pref(s[l+3]) {
 			cur:=node(s[l+1])
 			cur.left=solve(s,l,l)
 			cur.right=solve(s,l+2,r)
+			return cur
 		} else { //case 2: s[i+1] will be in the left part of the tree
 			cur:=node(s[l+3])
-			cur.left=solve(s,l,)
+			cur.left=solve(s,l,l+2)
+			cur.right=solve(s,l+3,r)
+			return cur
 		}
 	}
 }
 func main(){
 	var exprsn="a+b"
-
+	root:=solve(s,0,len(s)-1))
+	preOrder(root)
+	fmt.Println(" ")
+	postOrder(root)
 
 }
