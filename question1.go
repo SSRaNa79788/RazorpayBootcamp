@@ -13,8 +13,8 @@ func (mat Matrix)setRowCol(row,col int) {
 	for i:=0;i<row;i++ {
 		mat.ele=append(mat.ele,rowSlice)
 	}
-	fmt.Println(len(mat.ele))//printing number of rows
-	fmt.Println(len(mat.ele[0]))//printing number of columns
+	//fmt.Println(len(mat.ele))//printing number of rows
+	//fmt.Println(len(mat.ele[0]))//printing number of columns
 }
 func (mat Matrix)getCol()int{
 	return mat.col
