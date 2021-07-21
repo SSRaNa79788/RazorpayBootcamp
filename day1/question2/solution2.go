@@ -1,12 +1,10 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"os"
 )
 type node struct{
-	char byte
+	char string
 	left,right *node
 }
 func preOrder(cur *node){
@@ -22,8 +20,8 @@ func postOrder(cur *node){
 		return
 	}
 	postOrder(cur.right)
-	fmt.Print(cur.char)
 	postOrder(cur.left)
+	fmt.Print(cur.char)
 }
 func pref (c byte)int{
 	if c=='*' || c=='/'{
@@ -32,35 +30,39 @@ func pref (c byte)int{
 		return 1
 	}
 }
-func solve(s string,l int,r int ) *node {
+func buildTree(s string,l int,r int ) *node {
 	if l==r {
-		cur := node(s[l],nil,nil)
-		return &cur
+		cur := &node{char:string([]rune(s)[l])}
+		return cur
 	} else if l==r-2 {
-		cur:=node(s[l+1])
-		cur.left=solve(s,l,l)
-		cur.right=solve(s,r,r)
-		return &cur
+		cur:=&node{char:string([]rune(s)[l+1])}
+		cur.left=buildTree(s,l,l)
+		cur.right=buildTree(s,r,r)
+		return cur
 	} else {
 		//case 1: s[i+1] wil be the current treenode
 		if pref(s[l+1])<=pref(s[l+3]) {
-			cur:=node(s[l+1])
-			cur.left=solve(s,l,l)
-			cur.right=solve(s,l+2,r)
+			cur:=&node{char:string([]rune(s)[l+1])}
+			cur.left=buildTree(s,l,l)
+			cur.right=buildTree(s,l+2,r)
 			return cur
 		} else { //case 2: s[i+1] will be in the left part of the tree
-			cur:=node(s[l+3])
-			cur.left=solve(s,l,l+2)
-			cur.right=solve(s,l+3,r)
+			cur:=&node{char:string([]rune(s)[l+3])}
+			cur.left=buildTree(s,l,l+2)
+			cur.right=buildTree(s,l+3,r)
 			return cur
 		}
 	}
 }
 func main(){
-	var exprsn="a+b"
-	root:=solve(exprsn,0,len(exprsn)-1))
+	exprsn:="a+b"
+	fmt.Println(string([]rune(exprsn)[1]))
+
+	root:=buildTree(exprsn,0,len(exprsn)-1)
+	fmt.Println("The Preorder traversal is :")
 	preOrder(root)
-	fmt.Println(" ")
+	fmt.Println("\nThe Preorder traversal is :")
 	postOrder(root)
+	fmt.Println("")
 
 }
