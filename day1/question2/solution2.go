@@ -23,8 +23,8 @@ func postOrder(cur *node){
 	postOrder(cur.left)
 	fmt.Print(cur.char)
 }
-func pref (c byte)int{
-	if c=='*' || c=='/'{
+func pref (c string)int{
+	if c=="*" || c=="/"{
 		return 2
 	} else{
 		return 1
@@ -41,7 +41,7 @@ func buildTree(s string,l int,r int ) *node {
 		return cur
 	} else {
 		//case 1: s[i+1] wil be the current treenode
-		if pref(s[l+1])<=pref(s[l+3]) {
+		if pref(string([]rune(s)[l+1]))<=pref(string([]rune(s)[l+3])) {
 			cur:=&node{char:string([]rune(s)[l+1])}
 			cur.left=buildTree(s,l,l)
 			cur.right=buildTree(s,l+2,r)
@@ -49,19 +49,19 @@ func buildTree(s string,l int,r int ) *node {
 		} else { //case 2: s[i+1] will be in the left part of the tree
 			cur:=&node{char:string([]rune(s)[l+3])}
 			cur.left=buildTree(s,l,l+2)
-			cur.right=buildTree(s,l+3,r)
+			cur.right=buildTree(s,l+4,r)
 			return cur
 		}
 	}
 }
 func main(){
-	exprsn:="a+b"
-	fmt.Println(string([]rune(exprsn)[1]))
+	exprsn:="a*b-c"
+	//fmt.Println(string([]rune(exprsn)[1]))
 
 	root:=buildTree(exprsn,0,len(exprsn)-1)
 	fmt.Println("The Preorder traversal is :")
 	preOrder(root)
-	fmt.Println("\nThe Preorder traversal is :")
+	fmt.Println("\nThe Postorder traversal is :")
 	postOrder(root)
 	fmt.Println("")
 
