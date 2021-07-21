@@ -58,7 +58,7 @@ func solve(s string,l int,r int ) *node {
 }
 func main(){
 	var exprsn="a+b"
-	root:=solve(s,0,len(s)-1))
+	root:=solve(exprsn,0,len(exprsn)-1))
 	preOrder(root)
 	fmt.Println(" ")
 	postOrder(root)
