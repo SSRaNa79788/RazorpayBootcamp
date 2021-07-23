@@ -6,12 +6,15 @@ import (
 )
 var wg sync.WaitGroup
 type person struct{
+	mu sync.Mutex
 	balance int
 	transactions []int
 }
 
 func update(p *person,add int){
+	p.mu.Lock()
 	p.balance+=add
+	p.mu.Unlock()
 	wg.Done()
 }
 
@@ -25,9 +28,9 @@ func processAllTransaction(p *person){
 
 func main(){
 	persons := []person{
-		{500,[]int{20,-30}},
-		{500,[]int{10}},
-		{500,[]int{-10}}}
+		{balance: 500,transactions:[]int{20,-30}},
+		{balance:500,transactions:[]int{10}},
+		{balance:500,transactions:[]int{-10}}}
 
 	for key,_ := range persons{
 		wg.Add(1)
