@@ -37,12 +37,12 @@ func main(){
 	}
 
 	sum:=0
-	l:=len(ratings)
+	numberOfRatings:=len(ratings)
 	for _,rating:=range ratings{
 		wg.Add(1)
 		go add(&sum,rating)
 	}
 
 	wg.Wait()
-	fmt.Println(float64(sum)/float64(l))
+	fmt.Println(float64(sum)/float64(numberOfRatings))
 }
