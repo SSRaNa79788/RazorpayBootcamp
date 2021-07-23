@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"sync"
 )
 var wg sync.WaitGroup
@@ -11,7 +12,14 @@ func add(sum *int, rating int){
 }
 
 func main(){
-	ratings := []int{2,5,3,4,2,3,2,3,4,5,5,5,3,1,4}
+	var ratings []int
+
+	//generating random ratings
+	for i:=0;i<200;i++{
+		someRandomNumber := rand.Intn(5)
+		ratings[i]=someRandomNumber
+	}
+
 	sum:=0
 	l:=len(ratings)
 	for _,rating:=range ratings{
